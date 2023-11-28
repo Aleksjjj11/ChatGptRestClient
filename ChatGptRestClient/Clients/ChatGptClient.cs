@@ -1,5 +1,4 @@
 ﻿using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using ChatGptRestClient.Models;
 using ChatGptRestClient.Requests;
 using ChatGptRestClient.Responses;
@@ -20,7 +19,7 @@ public class ChatGptClient : IChatGptClient
   {
     using var httpClient = CreateHttpClient(BaseUrl, _chatGptApiKey);
     var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "chat/completions");
-    httpRequestMessage.Content = JsonContent.Create(request);
+    httpRequestMessage.Content = new StringContent(JsonConvert.SerializeObject(request));
     httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
     var response = await httpClient.SendAsync(httpRequestMessage);
@@ -39,8 +38,11 @@ public class ChatGptClient : IChatGptClient
   public async Task<Completion> CreateCompletion(CreateCompletionDavinciRequest request)
   {
     using var httpClient = CreateHttpClient(BaseUrl, _chatGptApiKey);
-    var requestContent = JsonContent.Create(request, new MediaTypeWithQualityHeaderValue("application/json"));
-    var response = await httpClient.PostAsync("completions", requestContent);
+    var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "completions");
+    httpRequestMessage.Content = new StringContent(JsonConvert.SerializeObject(request));
+    httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+    var response = await httpClient.SendAsync(httpRequestMessage);
 
     var stringContent = await response.Content.ReadAsStringAsync();
     var result = JsonConvert.DeserializeObject<Completion>(stringContent);
@@ -56,8 +58,11 @@ public class ChatGptClient : IChatGptClient
   public async Task<GenerateImageResponse> GenerateImage(GenerateImageRequest request)
   {
     using var httpClient = CreateHttpClient(BaseUrl, _chatGptApiKey);
-    var requestContent = JsonContent.Create(request, new MediaTypeWithQualityHeaderValue("application/json"));
-    var response = await httpClient.PostAsync("images/generations", requestContent);
+    var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "images/generations");
+    httpRequestMessage.Content = new StringContent(JsonConvert.SerializeObject(request));
+    httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+    var response = await httpClient.SendAsync(httpRequestMessage);
 
     var stringContent = await response.Content.ReadAsStringAsync();
     var result = JsonConvert.DeserializeObject<GenerateImageResponse>(stringContent);

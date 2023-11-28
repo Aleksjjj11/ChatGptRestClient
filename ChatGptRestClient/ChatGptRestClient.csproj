@@ -1,13 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>TaskeGroup.Utils.ChatGptRestClient</PackageId>
+        <Title>ChatGptRestClient</Title>
+        <Authors>TaskeGroup</Authors>
+        <PackageLicenseUrl>MIT</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/Aleksjjj11/ChatGptRestClient</RepositoryUrl>
+        <RepositoryType>public</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <LangVersion>11</LangVersion>
+        <TargetFrameworks>net7.0;netstandard2.1</TargetFrameworks>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
 
 </Project>
