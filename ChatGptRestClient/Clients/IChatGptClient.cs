@@ -11,5 +11,5 @@ public interface IChatGptClient
   Task<Chat> CreateChatCompletion([Required] CreateChatCompletionRequest request);
   Task<Completion> CreateCompletion([Required] CreateCompletionDavinciRequest request);
   Task<GenerateImageResponse> GenerateImage([Required] GenerateImageRequest request);
-  void Init(string chatGptApiKey);
+  static void Init(string chatGptApiKey) { }
 }

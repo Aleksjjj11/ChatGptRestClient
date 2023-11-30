@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using ChatGptRestClient.Models;
 using ChatGptRestClient.Requests;
 using ChatGptRestClient.Responses;
@@ -15,11 +16,16 @@ public class ChatGptClient : IChatGptClient
 
   public static IChatGptClient Current => _chatGptClient ??= new ChatGptClient();
 
+  public static void Init(string chatGptApiKey)
+  {
+    _chatGptApiKey = chatGptApiKey;
+  }
+
   public async Task<Chat> CreateChatCompletion(CreateChatCompletionRequest request)
   {
     using var httpClient = CreateHttpClient(BaseUrl, _chatGptApiKey);
     var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "chat/completions");
-    httpRequestMessage.Content = new StringContent(JsonConvert.SerializeObject(request));
+    httpRequestMessage.Content = JsonContent.Create(request);
     httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
     var response = await httpClient.SendAsync(httpRequestMessage);
@@ -39,7 +45,7 @@ public class ChatGptClient : IChatGptClient
   {
     using var httpClient = CreateHttpClient(BaseUrl, _chatGptApiKey);
     var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "completions");
-    httpRequestMessage.Content = new StringContent(JsonConvert.SerializeObject(request));
+    httpRequestMessage.Content = JsonContent.Create(request);
     httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
     var response = await httpClient.SendAsync(httpRequestMessage);
@@ -73,11 +79,6 @@ public class ChatGptClient : IChatGptClient
     }
 
     return result;
-  }
-
-  public void Init(string chatGptApiKey)
-  {
-    _chatGptApiKey = chatGptApiKey;
   }
 
   private HttpClient CreateHttpClient(string baseUrl, string? apiKey)
