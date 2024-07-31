@@ -11,8 +11,8 @@
         <RepositoryType>public</RepositoryType>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <LangVersion>12</LangVersion>
-        <TargetFrameworks>net7.0;netstandard2.1</TargetFrameworks>
-        <Version>1.1.1</Version>
+        <TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
+        <Version>1.1.2</Version>
     </PropertyGroup>
 
     <ItemGroup>
